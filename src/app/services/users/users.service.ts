@@ -15,7 +15,7 @@ export class UsersService {
   async getAll(): Promise<User[]> {
     const data = await fetch(`${this.API_URL}/GetUsers`, {
       method: 'GET',
-      headers: { 'Authorization': `Bearer ${this.token()}` }
+      credentials: 'include'
     });
     if (!data.ok) throw new Error(`Error fetching users: ${data.status}`);
     return data.json();
@@ -24,21 +24,16 @@ export class UsersService {
   async getInfoByNick(nick: string): Promise<User> {
     const data = await fetch(`${this.API_URL}/GetUserInfo/${nick}`, {
       method: 'GET',
-      headers: { 'Authorization': `Bearer ${this.token()}` }
+      credentials: 'include'
     });
     if (!data.ok) throw new Error(`Error fetching user info: ${data.status}`);
     return data.json();
   }
 
   async getMyProfile(): Promise<User> {
-    // const authTokenObj = JSON.parse(sessionStorage.getItem('auth_token') || '{}');
-    // const token = authTokenObj.token;
-    // console.log("El Token es: ", token);
     const data = await fetch(`${this.API_URL}/Profile`, {
       method: 'GET',
-      headers: { 'Authorization': `Bearer ${this.token()}`}, // Asegura que las cookies se envíen con la solicitud
       credentials: 'include'
-      // headers: { 'Authorization': `Bearer ${token}` }
     });
     if (!data.ok) throw new Error(`Error fetching user profile: ${data.status}`);
     return data.json();
@@ -56,11 +51,11 @@ export class UsersService {
       
       const data = await fetch('http://localhost:8080/api/Comments', {
         method: 'POST',
-        headers: { 
-          'Authorization': `Bearer ${this.token()}`,
+        headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(commentData)
+        body: JSON.stringify(commentData),
+        credentials: 'include'
       });
       if (!data.ok) throw new Error(`Error fetching user comments: ${data.status}`);
       const response = await data.text();
@@ -75,7 +70,7 @@ export class UsersService {
     try{
       const data = await fetch(`http://localhost:8080/api/Comments/${id}`, {
         method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${this.token()}` }
+        credentials: 'include'
       });
       
       if (!data.ok) {
@@ -93,7 +88,7 @@ export class UsersService {
   async addFavorite(id: number): Promise<boolean> {
     const data = await fetch(`${this.API_URL}/Favorites/${id}`, {
       method: 'POST',
-      headers: { 'Authorization': `Bearer ${this.token()}` }
+      credentials: 'include'
     });
     if (!data.ok) throw new Error(`Error fetching user comments: ${data.status}`);
     const response = await data.text();
@@ -103,7 +98,7 @@ export class UsersService {
   async deleteFavorite(id: number): Promise<boolean> {
     const data = await fetch(`${this.API_URL}/Favorites/${id}`, {
       method: 'DELETE',
-      headers: { 'Authorization': `Bearer ${this.token()}` }
+      credentials: 'include'
     });
     if (!data.ok) throw new Error(`Error fetching user comments: ${data.status}`);
     const response = await data.text();
@@ -113,7 +108,7 @@ export class UsersService {
   async isMyFavorite(id: number): Promise<boolean> {
     const data = await fetch(`${this.API_URL}/Favorites/${id}`, {
       method: 'GET',
-      headers: { 'Authorization': `Bearer ${this.token()}` }
+      credentials: 'include'
     });
     if (!data.ok) throw new Error(`Error fetching user comments: ${data.status}`);
     const response = await data.text();
@@ -139,10 +134,8 @@ export class UsersService {
     try {
       const response = await fetch(`${this.API_URL}/Update`, {
         method: 'PATCH',
-        headers: { 
-          'Authorization': `Bearer ${this.token()}`
-        },
-        body: formData
+        body: formData,
+        credentials: 'include'
       });
       
       if (!response.ok) {
@@ -159,7 +152,7 @@ export class UsersService {
   async deleteMyAccount(): Promise<void> {
     const response = await fetch(`${this.API_URL}/Delete`, {
       method: 'DELETE',
-      headers: { 'Authorization': `Bearer ${this.token()}` }
+      credentials: 'include'
     });
     if (!response.ok) throw new Error(response.statusText);
     sessionStorage.clear();
