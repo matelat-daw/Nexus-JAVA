@@ -49,7 +49,7 @@ export class UsersService {
         constellationId: constellationId,
       };
       
-      const data = await fetch('http://localhost:8080/api/Comments', {
+      const data = await fetch('http://localhost:8080/api/Account', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -110,7 +110,7 @@ export class UsersService {
       method: 'GET',
       credentials: 'include'
     });
-    if (!data.ok) throw new Error(`Error fetching user comments: ${data.status}`);
+    if (!data.ok) throw new Error(`Error fetching user favorite: ${data.status}`);
     const response = await data.text();
     return response === 'true';
   }

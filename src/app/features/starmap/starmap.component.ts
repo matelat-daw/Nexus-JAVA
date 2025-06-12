@@ -380,7 +380,7 @@ goToSolar() {
       const data = await this.userService.isMyFavorite(id);
       this.isFavorite.set(data);
     } catch (error) {
-      console.error('Error fetching user comments:', error);
+      console.error('Error fetching user favorite:', error);
     }
   }
 

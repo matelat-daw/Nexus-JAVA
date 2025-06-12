@@ -97,12 +97,10 @@ export class AuthService {
     if (loginMethod === 'google') {
       this.authGoogle.signOut();
     }
-    // sessionStorage.removeItem('auth_token');
     sessionStorage.removeItem('login_method');
     sessionStorage.clear();
     this.token.set(null);
     this.user.set(null);
     this.profileImage.set('');
-    // document.cookie = 'g_state=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
   }
 }

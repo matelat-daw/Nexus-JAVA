@@ -72,7 +72,8 @@ export class ProfileComponent {
     private router: Router,
     private fb: FormBuilder,
     private authService: AuthService
-  ) {this.profileImage = this.authService.profileImage;}
+  ) {}
+  // {this.profileImage = this.authService.profileImage;}
 
   async ngOnInit(): Promise<void> {
     await this.onLoginSuccess();
