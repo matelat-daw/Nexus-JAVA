@@ -70,11 +70,12 @@ export class AuthService {
     const responseText = await this.fetchAndHandle(
       `${this.API_URL}/Login`,
       { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }),
-      credentials: 'include' // <- Importante para cookies
+      credentials: 'include'
      }
     );
     if (/Confirmado|confirmado/.test(responseText)) this.handleErrors(['global: Email no verificado. Por favor revisa tu correo.']);
     sessionStorage.setItem('login_method', 'local');
+    console.log('El texto de respuesta es:', responseText);
     this.token.set(responseText);
   }
 
@@ -91,7 +92,7 @@ export class AuthService {
   async logout(): Promise<void> {
     await this.fetchAndHandle(
       'http://localhost:8080/api/Account/Logout',
-      { method: 'POST', headers: { 'Authorization': `Bearer ${this.token()}` } }
+      { method: 'POST', credentials: 'include' }
     );
     const loginMethod = sessionStorage.getItem('login_method');
     if (loginMethod === 'google') {
