@@ -75,13 +75,7 @@ export class ProfileComponent {
   ) {this.profileImage = this.authService.profileImage;}
 
   async ngOnInit(): Promise<void> {
-    if (!sessionStorage.getItem('profileReloaded')) {
-      sessionStorage.setItem('profileReloaded', 'true');
-      location.reload();
-    } else {
-      sessionStorage.removeItem('profileReloaded');
-    }
-    this.onLoginSuccess();
+    await this.onLoginSuccess();
   }
 
   async onLoginSuccess() {

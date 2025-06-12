@@ -75,7 +75,6 @@ export class AuthService {
     );
     if (/Confirmado|confirmado/.test(responseText)) this.handleErrors(['global: Email no verificado. Por favor revisa tu correo.']);
     sessionStorage.setItem('login_method', 'local');
-    console.log('El texto de respuesta es:', responseText);
     this.token.set(responseText);
   }
 
@@ -84,7 +83,7 @@ export class AuthService {
       `${this.API_URL}/GoogleLogin`,
       { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ token }) }
     );
-    sessionStorage.setItem('auth_token', responseText);
+    // sessionStorage.setItem('auth_token', responseText);
     sessionStorage.setItem('login_method', 'google');
     this.token.set(responseText);
   }
@@ -98,12 +97,12 @@ export class AuthService {
     if (loginMethod === 'google') {
       this.authGoogle.signOut();
     }
-    sessionStorage.removeItem('auth_token');
+    // sessionStorage.removeItem('auth_token');
     sessionStorage.removeItem('login_method');
     sessionStorage.clear();
     this.token.set(null);
     this.user.set(null);
     this.profileImage.set('');
-    document.cookie = 'g_state=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    // document.cookie = 'g_state=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
   }
 }
